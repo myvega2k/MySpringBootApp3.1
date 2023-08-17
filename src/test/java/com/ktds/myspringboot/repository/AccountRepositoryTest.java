@@ -43,7 +43,7 @@ class AccountRepositoryTest {
             System.out.println("Not Found");
         }
 
-        AccountEntity accountEntity = accountRepository.findById(1L)
+        AccountEntity accountEntity = accountRepository.findById(112L)
                 //<X extends Throwable> T orElseThrow(Supplier<? extends X> exceptionSupplier)
                 //Supplier 추상메서드 T get()
                 .orElseThrow(() -> new RuntimeException("Account Not Found"));
