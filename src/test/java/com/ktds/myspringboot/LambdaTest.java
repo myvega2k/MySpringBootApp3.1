@@ -32,10 +32,19 @@ public class LambdaTest {
         int sumOfAge =
                 customerList.stream() //Stream<Customer>
                         .filter(customer -> customer.getAge() >= 50) //Stream<Customer>
-                        //.mapToInt(customer -> customer.getAge()) //Stream<Integer>
-                        .mapToInt(Customer::getAge)//IntStream
+                        .mapToInt(customer -> customer.getAge()) //IntStream
+                        //.mapToInt(Customer::getAge)//IntStream
                         .sum();
         System.out.println("나이 합계 " + sumOfAge);
+
+        //나이가 가장 많은 Customer 찾기 
+        //IntStream의 max() 메서드 사용
+        int maxAgeValue = customerList.stream() //Stream<Customer>
+                .mapToInt(cust -> cust.getAge()) //IntStream
+                .max() //OptionalInt
+                .getAsInt();
+        System.out.println("maxAgeValue = " + maxAgeValue);  //soutv
+
     }
 
     @Test
