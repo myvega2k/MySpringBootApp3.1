@@ -21,7 +21,7 @@ public class DefaultExceptionAdvice {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("message", "[안내] " + e.getMessage());
         result.put("httpStatus", e.getHttpStatus().value());
-
+        //body + status code + header
         return new ResponseEntity<>(result, e.getHttpStatus());
     }
     
