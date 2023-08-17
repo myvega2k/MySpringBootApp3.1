@@ -9,10 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserResDto {
-    private Long id;
+public class UserReqDto {
     private String name;
     private String email;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    private LocalDateTime createdAt;
 }
