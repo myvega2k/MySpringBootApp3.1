@@ -1,12 +1,14 @@
 package com.ktds.myspringboot.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "account")
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class AccountEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
