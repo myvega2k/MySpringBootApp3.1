@@ -3,7 +3,9 @@ package com.ktds.myspringboot;
 import com.ktds.myspringboot.dto.Customer;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class LambdaTest {
@@ -44,6 +46,18 @@ public class LambdaTest {
                 .max() //OptionalInt
                 .getAsInt();
         System.out.println("maxAgeValue = " + maxAgeValue);  //soutv
+        //Stream의 max() 메서드 사용
+        Integer maxValue = customerList.stream() //Stream<Customer>
+                .map(cust -> cust.getAge()) //Stream<Integer>
+                .max(Integer::compareTo)//Optional<Integer>
+                .get();
+        System.out.println("maxValue = " + maxValue);
+
+        maxValue = customerList.stream()
+                .map(cust -> cust.getAge())
+                .max(Comparator.comparingInt(age -> age.intValue()))
+                //.max(Comparator.comparingInt(Integer::intValue))
+                .get();
 
     }
 
