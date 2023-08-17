@@ -8,11 +8,12 @@ import lombok.Setter;
 @Table(name = "account")
 @Getter @Setter
 public class AccountEntity {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
     private String username;
 
     private String password;
+
 }
