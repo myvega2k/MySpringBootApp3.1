@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional
@@ -44,7 +44,7 @@ public class UserService {
         List<User> userList = userRepository.findAll();
         List<UserResDto> userResDtoList = userList.stream() //Stream<User>
                 .map(user -> modelMapper.map(user, UserResDto.class))//Stream<UserResDto>
-                .collect(Collectors.toList());//List<UserResDto>
+                .collect(toList());//List<UserResDto>
         return userResDtoList;
     }
 }
