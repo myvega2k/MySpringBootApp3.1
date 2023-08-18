@@ -48,6 +48,12 @@ public class UserService {
         return modelMapper.map(existUser, UserResDto.class);
     }
 
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id) //Optional<User>
+                .orElseThrow(() ->
+                        new BusinessException(id + " User Not Found", HttpStatus.NOT_FOUND));
+        userRepository.delete(user);
+    }
     @Transactional(readOnly = true)
     public List<UserResDto> getUsers() {
         List<User> userList = userRepository.findAll();
