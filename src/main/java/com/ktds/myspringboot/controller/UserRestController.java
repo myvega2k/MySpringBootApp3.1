@@ -29,4 +29,11 @@ public class UserRestController {
     public List<UserResDto> getUser() {
         return userService.getUsers();
     }
+
+    @PatchMapping("/{email}")
+    public UserResDto upateUser(@PathVariable String email,
+                                @RequestBody UserReqDto userReqDto){
+        return userService.updateUser(email, userReqDto);
+
+    }
 }
