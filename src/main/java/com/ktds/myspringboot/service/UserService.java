@@ -39,6 +39,15 @@ public class UserService {
         return modelMapper.map(user, UserResDto.class);
     }
 
+    public UserResDto updateUser(String email, UserReqDto userReqDto) {
+        User existUser = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new BusinessException(email + " User Not Found", HttpStatus.NOT_FOUND));
+        //setter method 호출
+        existUser.setName(userReqDto.getName());
+        return modelMapper.map(existUser, UserResDto.class);
+    }
+
     @Transactional(readOnly = true)
     public List<UserResDto> getUsers() {
         List<User> userList = userRepository.findAll();
@@ -47,4 +56,6 @@ public class UserService {
                 .collect(toList());//List<UserResDto>
         return userResDtoList;
     }
+
+
 }
