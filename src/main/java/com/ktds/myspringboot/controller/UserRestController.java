@@ -4,6 +4,7 @@ import com.ktds.myspringboot.dto.UserReqDto;
 import com.ktds.myspringboot.dto.UserResDto;
 import com.ktds.myspringboot.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,11 @@ public class UserRestController {
     public UserResDto upateUser(@PathVariable String email,
                                 @RequestBody UserReqDto userReqDto){
         return userService.updateUser(email, userReqDto);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok(id + " User가 삭제처리 되었습니다.");
     }
 }
