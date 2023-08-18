@@ -4,10 +4,8 @@ import com.ktds.myspringboot.dto.UserReqDto;
 import com.ktds.myspringboot.dto.UserResDto;
 import com.ktds.myspringboot.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,4 +17,10 @@ public class UserRestController {
     public UserResDto saveUser(@RequestBody UserReqDto userReqDto) {
         return userService.saveUser(userReqDto);
     }
+
+    @GetMapping("/{myId}")
+    public UserResDto getUserById(@PathVariable("myId") Long id) {
+        return userService.getUserById(id);
+    }
+
 }
