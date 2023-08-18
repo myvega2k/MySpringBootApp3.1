@@ -1,7 +1,10 @@
 package com.ktds.myspringboot.config;
 
+import com.ktds.myspringboot.service.UserInfoUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,7 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/users/welcome","/userinfos/new").permitAll()
+                    auth.requestMatchers("/users/welcome", "/userinfos/new").permitAll()
                             .requestMatchers("/users/**").authenticated();
                 })
                 .formLogin(withDefaults())
@@ -36,16 +39,29 @@ public class SecurityConfig {
     }
 
     @Bean
-    //authentication
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails admin = User.withUsername("adminboot")
-                .password(encoder.encode("pwd1"))
-                .roles("ADMIN")
-                .build();
-        UserDetails user = User.withUsername("userboot")
-                .password(encoder.encode("pwd2"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(admin, user);
+    public UserDetailsService userDetailsService() {
+        return new UserInfoUserDetailsService();
     }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider
+                = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
+//    @Bean
+//    //authentication
+//    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+//        UserDetails admin = User.withUsername("adminboot")
+//                .password(encoder.encode("pwd1"))
+//                .roles("ADMIN")
+//                .build();
+//        UserDetails user = User.withUsername("userboot")
+//                .password(encoder.encode("pwd2"))
+//                .roles("USER")
+//                .build();
+//        return new InMemoryUserDetailsManager(admin, user);
+//    }
 }
