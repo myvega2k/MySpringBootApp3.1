@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,9 +25,12 @@ public class MyRunner implements ApplicationRunner {
     @Resource(name="myCustomer")
     Customer customer;
 
+    @Autowired
+    Environment environment;
     private Logger logger = LoggerFactory.getLogger(MyRunner.class);
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        logger.info("Port Number = {}", environment.getProperty("local.server.port"));
         logger.info("Logger 구현클래스이름 = {}",logger.getClass().getName());
         logger.debug("Customer Bean " + customer);
         logger.debug("VM Argument = " + args.containsOption("foo")); //false
